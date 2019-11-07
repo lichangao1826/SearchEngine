@@ -63,9 +63,10 @@ ROBOTSTXT_OBEY = False
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-# ITEM_PIPELINES = {
-#    'spiders.pipelines.SpidersPipeline': 300,
-# }
+ITEM_PIPELINES = {
+    'spiders.pipelines.SpidersMongoPipeline': 100,
+    # 'spiders.pipelines.SpidersPipeline': 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
@@ -93,8 +94,12 @@ SCHEDULER = "scrapy_redis_bloomfilter.scheduler.Scheduler"
 # Ensure all spiders share same duplicates filter through redis.
 DUPEFILTER_CLASS = "scrapy_redis_bloomfilter.dupefilter.RFPDupeFilter"
 
-# Redis URL
-REDIS_URL = 'redis://:foobared@localhost:6379'
+# Redis settings
+REDIS_URL = "redis://:foobared@localhost:6379"
+
+# Mongo settings
+MONGO_URL = "mongodb://crawler:foobared@localhost:27017/search_engine"
+MONGO_DATABASE = "search_engine"
 
 # Number of Hash Functions to use, defaults to 6
 BLOOMFILTER_HASH_NUMBER = 6
