@@ -37,6 +37,9 @@ class SpidersMongoPipeline(object):
         self._db = self._client[self._mongo_db]
         self._collection = self._db[self.COLLECTION_NAME]
 
+        # 添加唯一索引
+        self._collection.create_index("hash_id", unique=True)
+
     def close_spider(self, spider):
         self._client.close()
 

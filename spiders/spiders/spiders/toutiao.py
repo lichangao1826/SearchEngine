@@ -19,13 +19,19 @@ class ToutiaoSpider(scrapy.Spider):
 
     BASE_URL = 'http://is.snssdk.com/api/news/feed/v51/'
 
+    custom_settings = {
+        'DOWNLOAD_DELAY': 3
+    }
+
     def start_requests(self):
         for i, channel in enumerate(self.channels):
-            yield scrapy.Request(
-                self.BASE_URL,
-                body=self._generate_params(channel),
+            yield scrapy.FormRequest(
+                url=self.BASE_URL,
+                headers=self.headers,
+                formdata=self._generate_params(channel),
                 meta={'cookiejar': i},
-                callback=self.parse
+                callback=self.parse,
+                method='GET'
             )
 
     def parse(self, response):
@@ -34,6 +40,7 @@ class ToutiaoSpider(scrapy.Spider):
             info = json.loads(data['data'][i]['content'])
             item = NewsItem()
             item['title'] = info.get('title', '')
+            item['hash_id'] = hash(item['title'])
             item['link'] = info.get('article_url', '')
             item['abstract'] = info.get('abstract', '')
             item['content'] = ''  # TODO
@@ -52,11 +59,11 @@ class ToutiaoSpider(scrapy.Spider):
             # 返回数量，默认为 20
             'count': '20',
             # 上次请求时间的时间戳，例：1491981025
-            'min_behot_time': last_request_time,
+            'min_behot_time': str(last_request_time),
             # 本次请求时间的时间戳，例：1491981165
-            'last_refresh_sub_entrance_interval': current_time - 10,
+            'last_refresh_sub_entrance_interval': str(current_time - 10),
             # 本地时间
-            'loc_time': int(current_time / 1000) * 1000,
+            'loc_time': str(int(current_time / 1000) * 1000),
             # 经度
             'latitude': '',
             # 纬度
@@ -74,4 +81,4 @@ class ToutiaoSpider(scrapy.Spider):
             'openudid': '1b8d5bf69dc4a561',
         }
 
-        return json.dumps(params)
+        return params
