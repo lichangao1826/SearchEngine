@@ -37,7 +37,6 @@ class SinaSpider(scrapy.Spider):
         item = NewsItem()
         news = response.meta.get('news')
         item['title'] = news.get('title')
-        item['abstract'] = news.get('summary')
         item['link'] = news.get('url')
         item['publish_time'] = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(int(news.get('ctime'))))
         content_xpath = response.xpath('//*[@id="artibody"]/p/text()') or response.xpath('//*[@id="article"]/p/text()')

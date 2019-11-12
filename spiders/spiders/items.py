@@ -18,6 +18,5 @@ class NewsItem(scrapy.Item):
     hash_id = scrapy.Field()  # 全局唯一ID
     title = scrapy.Field()  # 标题
     link = scrapy.Field()  # 链接
-    abstract = scrapy.Field()  # 摘要
     content = scrapy.Field()  # 内容
     publish_time = scrapy.Field()  # 发布时间
