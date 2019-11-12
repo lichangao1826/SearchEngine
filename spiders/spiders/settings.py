@@ -102,10 +102,10 @@ MONGO_URL = "mongodb://crawler:foobared@localhost:27017/search_engine"
 MONGO_DATABASE = "search_engine"
 
 # Number of Hash Functions to use, defaults to 6
-BLOOMFILTER_HASH_NUMBER = 6
+BLOOMFILTER_HASH_NUMBER = 8
 
 # Bit
-BLOOMFILTER_BIT = 10
+BLOOMFILTER_BIT = 30
 
 # Persist
 SCHEDULER_PERSIST = True
