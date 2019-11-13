@@ -7,3 +7,4 @@ elif environ == 'product':
     from .production import *
 
 PROJECT_NAME = 'SearchEngine'
+BASE_DIR = '~/Code/SearchEngine'
